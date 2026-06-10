@@ -15,7 +15,7 @@
 
 - Java 21
 - Spring Boot 3.5.0
-- Spring Cloud 2024.0.1
+- Spring Cloud 2025.0.0
 - Kubernetes
 - Kafka
 - Redis

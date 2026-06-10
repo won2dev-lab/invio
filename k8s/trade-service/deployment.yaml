@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trade-service
+  namespace: invio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trade-service
+  template:
+    metadata:
+      labels:
+        app: trade-service
+    spec:
+      containers:
+        - name: trade-service
+          image: trade-serviceatest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8082
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8082
+            initialDelaySeconds: 60
+            periodSeconds: 15

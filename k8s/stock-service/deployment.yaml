@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-service
+  namespace: invio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-service
+  template:
+    metadata:
+      labels:
+        app: stock-service
+    spec:
+      containers:
+        - name: stock-service
+          image: stock-serviceatest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8083
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+            initialDelaySeconds: 60
+            periodSeconds: 15
